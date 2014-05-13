@@ -1,9 +1,13 @@
 This file was created by IntelliJ IDEA 12.0 for binding GitHub repository
 http://www.raychase.net/page/2
 公钥私钥加密解密数字证书数字签名详解
-http://shentar.me/%E5%85%AC%E9%92%A5%E7%A7%81%E9%92%A5%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%AF%A6%E8%A7%A3/
+http://shentar.me/%E5%85%AC%E9%92%A5%E7%A7%81%E9%92%A5%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%A
+F%86%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%AF%A6%E8%A7%A3/
+
 finagle介绍
 http://engineering.twitter.com/2011/08/finagle-protocol-agnostic-rpc-system.html
 
 dragoon 监控
 http://docs.linuxtone.org/ebooks/autOps/Alibaba-%D7%D4%B6%AF%BB%AF%D4%CB%CE%AC.PDF
+weibo watchman
+http://www.infoq.com/cn/articles/weibo-watchman
