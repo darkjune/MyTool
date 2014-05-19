@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -30,6 +31,7 @@ public class NIOSimpleEchoServer implements Runnable {
     Selector selector;
     ByteBuffer buffer = ByteBuffer.allocate(1024);
     private Map<SocketChannel, byte[]> messages = new HashMap<SocketChannel, byte[]>();
+    private AtomicInteger count = new AtomicInteger(0);
 
     public void NIOServer() throws IOException {
     }
@@ -44,8 +46,10 @@ public class NIOSimpleEchoServer implements Runnable {
             ssc.register(selector, SelectionKey.OP_ACCEPT);
 
             while (true) {
+
                 int n = selector.select(); //block when no event.
                 if (n > 0) {
+                    System.out.println("selector hit:" + count.incrementAndGet());
                     Set<SelectionKey> keys = selector.selectedKeys();
 
                     Iterator<SelectionKey> iterator = keys.iterator();
@@ -53,7 +57,7 @@ public class NIOSimpleEchoServer implements Runnable {
                         SelectionKey key = iterator.next();
                         iterator.remove();
                         if (key.isAcceptable()) {
-                            System.out.println("access:" + key);
+                            System.out.println("key.isAcceptable:" + key);
 
 
                             ServerSocketChannel serverChannel = (ServerSocketChannel) key.channel();
@@ -61,6 +65,7 @@ public class NIOSimpleEchoServer implements Runnable {
                             socketChannel.configureBlocking(false);
                             socketChannel.register(selector, SelectionKey.OP_READ);
                         } else if (key.isReadable()) {
+                            System.out.println("key.isAcceptable:" + key);
                             SocketChannel serverChannel = (SocketChannel) key.channel();
                             buffer.clear();
                             int i = serverChannel.read(buffer);
@@ -77,6 +82,7 @@ public class NIOSimpleEchoServer implements Runnable {
                             }
 
                         } else if (key.isWritable()) {
+                            System.out.println("key.isAcceptable:" + key);
                             SocketChannel channel = (SocketChannel) key.channel();
                             byte[] buf = messages.get(channel);
                             if (buf != null) {
