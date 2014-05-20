@@ -53,7 +53,7 @@ public class NIOSimpleEchoServer implements Runnable {
                         SelectionKey key = iterator.next();
                         iterator.remove();
                         if (key.isAcceptable()) {
-                            System.out.println("access:" + key);
+                            System.out.println("Handle key.isAcceptable:" + key);
 
 
                             ServerSocketChannel serverChannel = (ServerSocketChannel) key.channel();
@@ -61,6 +61,7 @@ public class NIOSimpleEchoServer implements Runnable {
                             socketChannel.configureBlocking(false);
                             socketChannel.register(selector, SelectionKey.OP_READ);
                         } else if (key.isReadable()) {
+                            System.out.println("Handle key.isReadable:" + key);
                             SocketChannel serverChannel = (SocketChannel) key.channel();
                             buffer.clear();
                             int i = serverChannel.read(buffer);
@@ -77,6 +78,7 @@ public class NIOSimpleEchoServer implements Runnable {
                             }
 
                         } else if (key.isWritable()) {
+                            System.out.println("Handle key.isWritable:" + key);
                             SocketChannel channel = (SocketChannel) key.channel();
                             byte[] buf = messages.get(channel);
                             if (buf != null) {
@@ -107,7 +109,7 @@ public class NIOSimpleEchoServer implements Runnable {
         Thread t = new Thread(new NIOSimpleEchoServer());
         t.setName("select main");
         t.run();
-        System.out.println(String.format("Server end at:%s. ", System.currentTimeMillis()));
+        System.out.println(String.format("Server end at:%s. ", sdf.format(new Date())));
 
     }
 }
