@@ -1,6 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * This class is demonstrate a simple socket server, no matter what content read from request,
+ * server will write back a standard HTTP response.
+ * This is a block IO server, subsequence request will block until current request finish.
  */
 package com.tool.server;
 
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author ryan_zhu
  */
-public class MyServer {
+public class MyBIOServer {
     public static void main(String[]args){
         
         try {
@@ -48,7 +49,7 @@ public class MyServer {
             }
            
         } catch (IOException ex) {
-            Logger.getLogger(MyServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyBIOServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
