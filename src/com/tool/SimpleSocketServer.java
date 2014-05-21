@@ -41,7 +41,7 @@ public class SimpleSocketServer {
                 }
                 socket.getOutputStream().write(new String("HTTP-Version Status-Code Reason-Phrase CRLF\r\nHTTP/1.1 200 OK\r\n").getBytes());
                 socket.setSoTimeout(5000);
-                Thread.sleep(1000);
+//                Thread.sleep(1000);
                 log.info("awake.");
                 socket.close();
             } catch (IOException e) {
