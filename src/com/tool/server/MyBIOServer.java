@@ -32,7 +32,7 @@ public class MyBIOServer {
         
         try {
             ServerSocket ss = new ServerSocket();
-            SocketAddress sa = new InetSocketAddress("localhost",81);
+            SocketAddress sa = new InetSocketAddress("localhost",8080);
             ss.bind(sa);
             byte [] readbuff = new byte[1024];
             while (true){

@@ -32,7 +32,7 @@ public class SocketClient {
         @Override
         public void run() {
             try {
-                Socket socket = new Socket("192.168.1.132",8080);
+                Socket socket = new Socket("127.0.0.1",8080);
                 log.info("client"+no+":start working.");
                 socket.getOutputStream().write(new String("Client "+no).getBytes());
                 byte[] buffer = new byte[1024];

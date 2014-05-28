@@ -111,8 +111,11 @@ public class NIOSimpleEchoServer implements Runnable {
                                 messages.remove(channel);
                                 key.interestOps(SelectionKey.OP_READ);
                                 buffer.clear();
-                                buffer.put(buf);
-//                                buffer.put(MyBIOServer.SAMPLE_HTML_RESPONSE.getBytes());
+//                                buffer.put(buf);
+                                buffer.put((ResponseConst.HEAD ).getBytes());
+                                buffer.put(("\r\n").getBytes());
+                                buffer.put((ResponseConst.context).getBytes());
+                                
                                 buffer.flip();
                                 channel.write(buffer);
                                 System.out.println("Write to:" + channel.socket().getRemoteSocketAddress()

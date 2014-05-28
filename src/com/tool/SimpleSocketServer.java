@@ -1,7 +1,9 @@
 package com.tool;
 
+import com.tool.server.ResponseConst;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -20,7 +22,7 @@ public class SimpleSocketServer {
     Logger log = getLogger("SimpleSocketServer");
     ServerSocket server = null;
     public SimpleSocketServer() throws IOException {
-        server = new  ServerSocket(8080,1);
+        server = new  ServerSocket(8080,4);
         System.out.println("Server start... listen on:8080" + server.getInetAddress().toString());
     }
     public void service() throws InterruptedException {
@@ -33,13 +35,21 @@ public class SimpleSocketServer {
                 Scanner scan = new Scanner(is);
                 byte[] buffer = new byte[1024];
 
-                while (scan.hasNextLine()){
-                    String str = scan.nextLine();
-                    System.out.println("Read from "+socket.getRemoteSocketAddress()+"-->"+str);
-                    if(str.equals("bye")) break;
-
-                }
-                socket.getOutputStream().write(new String("HTTP-Version Status-Code Reason-Phrase CRLF\r\nHTTP/1.1 200 OK\r\n").getBytes());
+//                while (scan.hasNextLine()){
+//                    String str = scan.nextLine();
+//                    System.out.println("Read from "+socket.getRemoteSocketAddress()+"-->"+str);
+//                    if(str.equals("bye")) break;
+//
+//                }
+                PrintWriter pw = new PrintWriter(socket.getOutputStream());
+//                socket.getOutputStream().write(new String(ResponseConst.HEAD).getBytes());
+//                socket.getOutputStream().write(new String("\r\n").getBytes());
+//                socket.getOutputStream().write(new String(ResponseConst.context).getBytes());
+                pw.print(ResponseConst.HEAD);
+                pw.print("\r\n");
+                pw.print(ResponseConst.context);
+                pw.flush();
+//                socket.getOutputStream().flush();
                 socket.setSoTimeout(5000);
                 Thread.sleep(1000);
                 log.info("awake.");
