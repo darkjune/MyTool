@@ -51,7 +51,7 @@ public class SimpleSocketServer {
                 pw.flush();
 //                socket.getOutputStream().flush();
                 socket.setSoTimeout(5000);
-                Thread.sleep(1000);
+//                Thread.sleep(1000);
                 log.info("awake.");
                 socket.close();
             } catch (IOException e) {
