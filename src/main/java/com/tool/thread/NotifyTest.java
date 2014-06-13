@@ -25,7 +25,7 @@ public class NotifyTest {
             t.setName("Thread-" + i);
             t.start();
         }
- 
+
         while (lock.i > 0) {
 //            System.out.println("Main thread, lock.i=" + lock.i);
             try {
