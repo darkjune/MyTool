@@ -1,5 +1,6 @@
 /*
- * CountDownLatch ?????????????????countDown?? ????await???????
+ * Main thread create latch, give to sub thread, let them count down,
+ * main thread and WaitTask wait on Task to count.
  * 
  */
 package com.tool.thread;
@@ -56,7 +57,7 @@ class Task implements Runnable{
             Logger.getLogger(Task.class.getName()).log(Level.SEVERE, null, ex);
         }
         tlatch.countDown();
-        System.out.println(Thread.currentThread().getName() +" count.");
+        System.out.println(Thread.currentThread().getName() +" count." + "Count is:"+ tlatch.getCount());
     }
     
 }
@@ -70,6 +71,7 @@ class WaitTask implements Runnable{
 
     public void run() {
         try {
+            System.out.println("Second WaitThread(t2) start wait.");
             latch.await();
             System.out.println("Second WaitThread(t2) start.");
         } catch (InterruptedException e) {
