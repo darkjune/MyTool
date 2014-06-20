@@ -1,5 +1,7 @@
 /*
- * CountDownLatch ?????????????????countDown?? ????await???????
+ * CountDownLatch 
+ * Main thread start 4 subtask(thread), then wait on this latch.
+ * Each subtask will do countDown(), minus CountDownLatch numbers.
  * 
  */
 package com.tool.thread;
@@ -13,20 +15,22 @@ import java.util.logging.Logger;
  * @author ryan_zhu
  */
 public class CountDownLatchTest {
+
     CountDownLatch latch = new CountDownLatch(4);
-     
-    public void doMain() throws InterruptedException{
-        
-            for(int i=1;i<5;i++){
+
+    public void doMain() throws InterruptedException {
+
+        for (int i = 1; i < 5; i++) {
             Task task = new Task(latch);
             Thread thread = new Thread(task);
             thread.setName("Thread-" + i);
             thread.start();
         }
         latch.await();
-        System.out.println(Thread.currentThread().getName()+" thread start.");
+        System.out.println(Thread.currentThread().getName() + " thread start.");
     }
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         CountDownLatchTest test = new CountDownLatchTest();
         try {
             test.doMain();
@@ -34,12 +38,10 @@ public class CountDownLatchTest {
             Logger.getLogger(CountDownLatchTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    
 }
-    
 
-class Task implements Runnable{
+class Task implements Runnable {
+
     CountDownLatch tlatch;
 
     Task(CountDownLatch latch) {
@@ -47,7 +49,7 @@ class Task implements Runnable{
     }
 
     public void run() {
-        System.out.println(Thread.currentThread().getName() +" do something.");
+        System.out.println(Thread.currentThread().getName() + " do something.");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
@@ -55,5 +57,4 @@ class Task implements Runnable{
         }
         tlatch.countDown();
     }
-    
 }
