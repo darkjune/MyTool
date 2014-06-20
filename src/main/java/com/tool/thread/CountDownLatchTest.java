@@ -64,28 +64,7 @@ class Task implements Runnable {
         }
         tlatch.countDown();
         System.out.println(Thread.currentThread().getName() +" count." + "Count is:"+ tlatch.getCount());
-<<<<<<< HEAD
-    }
-}
 
-class WaitTask implements Runnable{
-    CountDownLatch latch ;
-
-    public WaitTask(CountDownLatch cdl){
-        this.latch = cdl;
-    }
-
-    public void run() {
-        try {
-            System.out.println("Second WaitThread(t2) start wait.");
-            latch.await();
-            System.out.println("Second WaitThread(t2) start.");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-=======
->>>>>>> 9290a185b1409699a00cdbbaf5d825e613dfc5bc
     }
 }
 
