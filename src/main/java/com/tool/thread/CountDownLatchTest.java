@@ -22,12 +22,14 @@ public class CountDownLatchTest {
 
         for (int i = 1; i < 5; i++) {
             Task task = new Task(latch);
-            Thread thread = new Thread(task);
-            thread.setName("Thread-" + i);
-            thread.start();
+            Thread t1 = new Thread(task);
+            t1.setName("Thread-" + i);
+            t1.start();
         }
+        Thread t2 = new Thread(new WaitTask(latch));
+        t2.start();
         latch.await();
-        System.out.println(Thread.currentThread().getName() + " thread start.");
+        System.out.println(Thread.currentThread().getName()+" thread(t1) start.");
     }
 
     public static void main(String[] args) {
@@ -56,5 +58,25 @@ class Task implements Runnable {
             Logger.getLogger(Task.class.getName()).log(Level.SEVERE, null, ex);
         }
         tlatch.countDown();
+        System.out.println(Thread.currentThread().getName() +" count." + "Count is:"+ tlatch.getCount());
+    }
+}
+
+class WaitTask implements Runnable{
+    CountDownLatch latch ;
+
+    public WaitTask(CountDownLatch cdl){
+        this.latch = cdl;
+    }
+
+    public void run() {
+        try {
+            System.out.println("Second WaitThread(t2) start wait.");
+            latch.await();
+            System.out.println("Second WaitThread(t2) start.");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 }
