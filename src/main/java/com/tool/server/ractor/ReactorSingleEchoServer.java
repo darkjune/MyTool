@@ -38,6 +38,12 @@ public class ReactorSingleEchoServer implements Runnable{
         public void run() {
             try {
                 SocketChannel sc = ssc.accept();
+                System.out.println(SelectionKey.OP_ACCEPT);
+                System.out.println(SelectionKey.OP_READ);
+                System.out.println(SelectionKey.OP_WRITE);
+                System.out.println("connect:"+SelectionKey.OP_CONNECT);
+                System.out.println("s&"+ (SelectionKey.OP_CONNECT&SelectionKey.OP_CONNECT));
+                System.out.println("Acceptor name:" + Thread.currentThread().getName());
                 if (sc!=null){
                     new ReactorSingleHandler(selector, sc);
                 }
@@ -49,18 +55,22 @@ public class ReactorSingleEchoServer implements Runnable{
     }
     
     /**
-     * Dispatch loop
+     * Dispatch loop，in a thread.
      */
     @Override
     public void run() {
         try {
-            selector.select();
-            Set selected = selector.selectedKeys();
-            Iterator i = selected.iterator();
-            while(i.hasNext()){
-                SelectionKey sk = (SelectionKey)i.next();
-                dispatch(sk);
+            while(!Thread.interrupted()){
+                selector.select();
+                Set selected = selector.selectedKeys();  //连接过多会负载较大
+                Iterator i = selected.iterator();
+                while(i.hasNext()){
+                    SelectionKey sk = (SelectionKey)i.next();
+                    dispatch(sk);
+                    selected.clear();
+                }
             }
+
         } catch (IOException ex) {
             Logger.getLogger(ReactorSingleEchoServer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,13 +78,20 @@ public class ReactorSingleEchoServer implements Runnable{
     }
     
     void dispatch(SelectionKey selKey){
-        
+        Runnable run = (Runnable)(selKey.attachment());
+        if (run != null){
+            new Thread(run, "Acceptor").start();
+        }
     }
-    
+
+    /**
+     * Entrance method, start main server thread.
+     * @param args
+     */
     public static void main(String[] args){
         try {
             ReactorSingleEchoServer server = new ReactorSingleEchoServer(8080);
-            new Thread(server).start();
+            new Thread(server,"main server").start();
         } catch (IOException ex) {
             Logger.getLogger(ReactorSingleEchoServer.class.getName()).log(Level.SEVERE, null, ex);
         }
