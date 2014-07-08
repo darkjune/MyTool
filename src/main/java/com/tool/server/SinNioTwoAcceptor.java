@@ -7,6 +7,7 @@ package com.tool.server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.ExecutorService;
@@ -42,10 +43,14 @@ public class SinNioTwoAcceptor {
         @Override
         public void run() {
             try {
-                System.out.println(Thread.currentThread().getName() + " start waiting.");
-                SocketChannel sc = ssc.accept();
-                sc.close();
-                System.out.println(Thread.currentThread().getName() + " reading.");
+                while (true) {
+                    System.out.println(Thread.currentThread().getName() + " start waiting.");
+                    SocketChannel sc = ssc.accept();
+                    ByteBuffer buf = ByteBuffer.allocate(1024);
+                    sc.write(buf.put(("test".getBytes())));
+                    sc.close();
+                    System.out.println(Thread.currentThread().getName() + " reading.");
+                }
 
             } catch (IOException ex) {
                 Logger.getLogger(SinNioTwoAcceptor.class.getName()).log(Level.SEVERE, null, ex);
