@@ -31,7 +31,7 @@ public class ThreadScopeShareData {
             new Thread(new Runnable() {
                 public void run() {
                     int data = new Random().nextInt();
-                    System.out.println(Thread.currentThread().getName() + " has put count:" + data);
+                    System.out.println(Thread.currentThread().getName() + " has get count:" + data);
                     MyThreadScopeData.getInstance().setName("name" + data);
                     MyThreadScopeData.getInstance().setAge(data);
                     System.out.println(Thread.currentThread().getName() + " MyThreadScopeData: " + MyThreadScopeData.getInstance());
@@ -49,6 +49,7 @@ public class ThreadScopeShareData {
             //System.out.println("A " + Thread.currentThread().getName() + " has get count:" +threadData.get(Thread.currentThread()));
 //			System.out.println("A " + Thread.currentThread().getName() + " has get count:" +threadLocal.get());
             MyThreadScopeData data = MyThreadScopeData.getInstance();
+
             System.out.println("A " + Thread.currentThread().getName() + " Singlton: " + data);
             System.out.println("A " + Thread.currentThread().getName() + " has get count:" + data.getName());
         }
@@ -66,11 +67,11 @@ public class ThreadScopeShareData {
 
         private String name;
         private int age;
-        public static ThreadLocal<MyThreadScopeData> map;
+        public static ThreadLocal<MyThreadScopeData> map = new ThreadLocal<MyThreadScopeData>();
 
         private MyThreadScopeData() {
         }
-        private static MyThreadScopeData instance;
+        private static MyThreadScopeData instance = null;
         
         public static /*synchronized*/ MyThreadScopeData getInstance() {
             /*MyThreadScopeData */            instance = map.get();
@@ -98,4 +99,36 @@ public class ThreadScopeShareData {
             this.age = age;
         }
     }
+
+    /**
+     *
+     *
+     Thread-1 has get count:-725385327
+     Thread-0 has get count:-251892602
+     Thread-0 MyThreadScopeData: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@608a6351
+     Thread-1 MyThreadScopeData: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@67854d1f
+     A Thread-1 Singlton: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@67854d1f
+     A Thread-0 Singlton: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@67854d1f
+     A Thread-1 has get count:null
+     A Thread-0 has get count:null
+     B Thread-0 Singlton: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@608a6351
+     B Thread-1 Singlton: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@67854d1f
+     B Thread-0 has get count:name-251892602
+     B Thread-1 has get count:null
+
+
+
+     Thread-1 has get count:35991595
+     Thread-0 has get count:-905420189
+     Thread-0 MyThreadScopeData: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@1d7e8c5b
+     Thread-1 MyThreadScopeData: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@608a6351
+     A Thread-0 Singlton: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@1d7e8c5b
+     A Thread-0 has get count:name-905420189
+     A Thread-1 Singlton: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@608a6351
+     A Thread-1 has get count:null
+     B Thread-0 Singlton: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@1d7e8c5b
+     B Thread-0 has get count:name-905420189
+     B Thread-1 Singlton: com.tool.thread.ThreadScopeShareData$MyThreadScopeData@608a6351
+     B Thread-1 has get count:null
+     */
 }
