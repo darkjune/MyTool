@@ -38,11 +38,11 @@ public class ReactorSingleEchoServer implements Runnable{
         public void run() {
             try {
                 SocketChannel sc = ssc.accept();
-                System.out.println(SelectionKey.OP_ACCEPT);
-                System.out.println(SelectionKey.OP_READ);
-                System.out.println(SelectionKey.OP_WRITE);
-                System.out.println("connect:"+SelectionKey.OP_CONNECT);
-                System.out.println("s&"+ (SelectionKey.OP_CONNECT&SelectionKey.OP_CONNECT));
+//                System.out.println(SelectionKey.OP_ACCEPT);
+//                System.out.println(SelectionKey.OP_READ);
+//                System.out.println(SelectionKey.OP_WRITE);
+//                System.out.println("connect:"+SelectionKey.OP_CONNECT);
+//                System.out.println("s&"+ (SelectionKey.OP_CONNECT&SelectionKey.OP_CONNECT));
                 System.out.println("Acceptor name:" + Thread.currentThread().getName());
                 if (sc!=null){
                     new ReactorSingleHandler(selector, sc);
@@ -67,8 +67,9 @@ public class ReactorSingleEchoServer implements Runnable{
                 while(i.hasNext()){
                     SelectionKey sk = (SelectionKey)i.next();
                     dispatch(sk);
-                    selected.clear();
+                    
                 }
+                selected.clear();
             }
 
         } catch (IOException ex) {
