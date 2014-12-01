@@ -5,7 +5,7 @@
 package com.tool.thread;
 
 /**
- *
+ * Demo on static issue when muti thread running.
  * @author ryan_zhu
  */
 /**

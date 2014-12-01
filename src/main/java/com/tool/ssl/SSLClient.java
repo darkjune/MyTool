@@ -23,7 +23,7 @@ public class SSLClient {
 
     public static void main(String[] args) {
         // TODO code application logic here
-        Certificate[] certChain = getCertificateChain("10.207.65.167", 443);
+        Certificate[] certChain = getCertificateChain("www.google.com", 443);
         if (certChain != null && certChain.length > 0) {
             Certificate aCert = certChain[0];
             if (aCert instanceof X509Certificate) {

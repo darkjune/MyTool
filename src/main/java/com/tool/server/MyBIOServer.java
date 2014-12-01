@@ -35,6 +35,7 @@ public class MyBIOServer {
             SocketAddress sa = new InetSocketAddress("localhost",8080);
             ss.bind(sa);
             byte [] readbuff = new byte[1024];
+            System.out.println("server started.");
             while (true){
                  Socket s =ss.accept();
                  if (s.getInputStream().read(readbuff)!=-1){

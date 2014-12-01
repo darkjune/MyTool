@@ -5,6 +5,7 @@
 package com.tool.server.rpc;
 
 import java.net.MalformedURLException;
+import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -19,8 +20,9 @@ public class RMIServiceMain {
     public static void main(String[] args){
         try {
             IRMIService service = new RMIServiceImpl();
-            LocateRegistry.createRegistry(6600);  //register port
-            Naming.rebind("rmi://127.0.0.1:6600/RMIService", service);  //register URL
+            //LocateRegistry.createRegistry(1099);  //register port
+            //Naming.rebind("rmi://127.0.0.1:1099/RMIService", service);  //register URL
+            Naming.rebind("RMIService", service);
             System.out.println("RMI start!");
         } catch (RemoteException ex) {
             Logger.getLogger(RMIServiceMain.class.getName()).log(Level.SEVERE, null, ex);

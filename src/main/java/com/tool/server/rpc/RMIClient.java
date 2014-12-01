@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class RMIClient {
     public static void main(String[] args){
         try {
-            IRMIService service = (IRMIService)Naming.lookup("rmi://127.0.0.1:6600/RMIService");
+            IRMIService service = (IRMIService)Naming.lookup("rmi://127.0.0.1:1099/RMIService");
             List<RMITransObj> list = service.getTransList();
             System.out.println("Get RMITransObj:name->"+list.get(0).getName());
             

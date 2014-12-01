@@ -21,6 +21,7 @@ public class SocketClient {
         for(int i=1;i<10;i++){
             exes.execute(new ClientWorker(i));
         }
+        
 
     }
 
@@ -39,12 +40,13 @@ public class SocketClient {
                 while (socket.getInputStream().read()!=-1){
                     socket.getInputStream().read(buffer);
                     System.out.println(new String(buffer));
+                    if (socket.isClosed()) socket.close();
                 }
                 PrintWriter pw = new PrintWriter(socket.getOutputStream());
                 pw.print("bye");
                 pw.flush();
                 //Thread.sleep(5000);
-//                socket.close();
+                socket.close();
             } catch (Exception e) {
                 log.severe(e.getMessage());  //To change body of catch statement use File | Settings | File Templates.
             }
